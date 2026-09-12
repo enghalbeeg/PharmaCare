@@ -1,0 +1,46 @@
+{
+  "hosting": [
+    {
+      "site": "pharmency-management-system",
+      "public": ".",
+      "ignore": [
+        "firebase.json",
+        ".firebaserc",
+        "**/.*",
+        "**/node_modules/**",
+        "tools/**",
+        "firestore.rules",
+        "firestore.indexes.json",
+        "*.md"
+      ],
+      "rewrites": [
+        { "source": "**", "destination": "/index.html" }
+      ],
+      "headers": [
+        {
+          "source": "service-worker.js",
+          "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
+        },
+        {
+          "source": "**/*.@(js|css|html)",
+          "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
+        }
+      ]
+    },
+    {
+      "site": "enghalbeeg",
+      "public": "eng",
+      "ignore": ["**/.*"],
+      "headers": [
+        {
+          "source": "**/*.@(html)",
+          "headers": [{ "key": "Cache-Control", "value": "no-cache" }]
+        }
+      ]
+    }
+  ],
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  }
+}

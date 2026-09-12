@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="PharmaCare — Modern Pharmacy Management System" />
+  <title>PharmaCare — Pharmacy Management System</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/styles.css?v=45" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%230d9488'%3E%3Cpath d='M19 8h-2V6a4 4 0 0 0-8 0v2H7a3 3 0 0 0-3 3v6a3 3 0 0 0 3 3h12a3 3 0 0 0 3-3v-6a3 3 0 0 0-3-3zm-6-2a2 2 0 0 1 4 0v2h-4V6zm2 11h-2v-2H9v-2h2v-2h2v2h2v2h-2v2z'/%3E%3C/svg%3E" />
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.webmanifest" />
+  <meta name="theme-color" content="#0d9488" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="PharmaCare" />
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png" />
+</head>
+<body>
+
+  <!-- ============== LOGIN SCREEN ============== -->
+  <div id="login-screen" class="login-screen">
+    <div class="login-bg-shapes" aria-hidden="true">
+      <span class="blob blob-1"></span>
+      <span class="blob blob-2"></span>
+      <span class="blob blob-3"></span>
+    </div>
+    <div class="login-card">
+      <div class="login-brand">
+        <div class="brand-logo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 8-7 7-7-7"/><path d="M12 2v13"/><circle cx="12" cy="20" r="2"/></svg>
+        </div>
+        <div>
+          <h1 class="brand-name">PharmaCare</h1>
+          <p class="brand-tag">Pharmacy Management System</p>
+        </div>
+      </div>
+      <h2 class="login-title">Welcome back 👋</h2>
+      <p class="login-sub">Sign in to manage your pharmacy</p>
+      <form id="login-form" class="login-form" autocomplete="off">
+        <label class="field">
+          <span class="field-label">Username</span>
+          <div class="input-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            <input type="text" id="login-username" placeholder="admin" required />
+          </div>
+        </label>
+        <label class="field">
+          <span class="field-label">Password</span>
+          <div class="input-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            <input type="password" id="login-password" placeholder="••••••" required />
+          </div>
+        </label>
+        <div id="login-error" class="login-error" hidden></div>
+        <button type="submit" class="btn btn-primary btn-block btn-lg">Sign In</button>
+      </form>
+      <div class="login-hint">
+        <strong>Demo login:</strong> username <code>admin</code> · password <code>admin</code>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============== APP SHELL ============== -->
+  <div id="app-shell" class="app-shell" hidden>
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-head">
+        <div class="brand-logo sm">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m19 8-7 7-7-7"/><path d="M12 2v13"/><circle cx="12" cy="20" r="2"/></svg>
+        </div>
+        <span class="sidebar-brand-text">PharmaCare</span>
+        <button class="icon-btn sidebar-close" data-action="toggle-sidebar" aria-label="Close menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <nav class="sidebar-nav" id="sidebar-nav"><!-- nav links injected by JS --></nav>
+      <div class="sidebar-foot">
+        <div class="storage-meter">
+          <div class="storage-label"><span>Local storage</span><span id="storage-pct">0%</span></div>
+          <div class="storage-bar"><div class="storage-fill" id="storage-fill"></div></div>
+        </div>
+      </div>
+    </aside>
+    <div class="sidebar-overlay" data-action="toggle-sidebar"></div>
+
+    <!-- Main -->
+    <div class="main">
+      <header class="topbar">
+        <button class="icon-btn menu-btn" data-action="toggle-sidebar" aria-label="Open menu">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M4 6h16M4 18h16"/></svg>
+        </button>
+        <div class="topbar-title">
+          <h1 id="page-title">Dashboard</h1>
+          <p id="page-subtitle" class="muted"></p>
+        </div>
+        <div class="topbar-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="text" id="global-search" placeholder="Search medicines…" />
+        </div>
+        <div class="topbar-actions">
+          <button class="icon-btn lang-btn" data-action="toggle-lang" aria-label="Language" title="Af-Soomaali / English"><span id="lang-label">EN</span></button>
+          <button class="icon-btn" data-action="toggle-theme" aria-label="Toggle theme" title="Toggle theme">
+            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+            <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></svg>
+          </button>
+          <button class="icon-btn notif-btn" data-action="open-alerts" aria-label="Alerts" title="Alerts">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+            <span class="notif-dot" id="notif-dot" hidden></span>
+          </button>
+          <div class="user-menu" id="user-menu">
+            <button class="user-btn" data-action="toggle-user-menu">
+              <span class="avatar" id="user-avatar">A</span>
+              <span class="user-meta">
+                <span class="user-name" id="user-name">Admin</span>
+                <span class="user-role" id="user-role">Administrator</span>
+              </span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="chev"><path d="m6 9 6 6 6-6"/></svg>
+            </button>
+            <div class="dropdown" id="user-dropdown" hidden>
+              <a href="#/settings" class="dropdown-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg> Settings</a>
+              <button class="dropdown-item danger" data-action="logout"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5M21 12H9"/></svg> Logout</button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <main class="content" id="app-content"><!-- views injected here --></main>
+    </div>
+  </div>
+
+  <!-- ============== MODAL ROOT ============== -->
+  <div id="modal-root"></div>
+  <!-- ============== TOAST ROOT ============== -->
+  <div id="toast-root" class="toast-root"></div>
+
+  <script src="assets/js/firebase-config.js?v=45"></script>
+  <script src="assets/js/store.js?v=45"></script>
+  <script src="assets/js/ui.js?v=45"></script>
+  <script src="assets/js/charts.js?v=45"></script>
+  <script src="assets/js/cloud.js?v=45"></script>
+  <script src="assets/js/app.js?v=45"></script>
+  <script>
+    // Register service worker for PWA (installable + offline). Skips on file:// where SW is unsupported.
+    if ('serviceWorker' in navigator && location.protocol.startsWith('http') && !location.search.includes('nosw')) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js').catch(err => console.warn('SW registration failed:', err));
+      });
+    }
+  </script>
+</body>
+</html>

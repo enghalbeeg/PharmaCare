@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="so">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#0d9488">
+<meta name="description" content="PharmaCare — nidaamka casriga ah ee maamulka farmashiga. Iib, bakhaar, deyn, shaybaadh iyo warbixino. Bishii 1aad bilaash + tababar.">
+<meta property="og:title" content="PharmaCare — Nidaamka Maamulka Farmashiga">
+<meta property="og:description" content="Farmashigaaga oo dhan hal shaashad — bishii 1aad bilaash + tababar shaqaale.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://pharmency-management-system.web.app/assets/icons/icon-512.png">
+<meta name="twitter:card" content="summary">
+<title>PharmaCare</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=Inter:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --bg:#f2f6f5; --surface:#ffffff; --surface-2:#e9f1ef; --raise:#ffffff;
+    --ink:#0b1a18; --muted:#51625f; --faint:#83978f;
+    --line:#dbe6e3; --line-strong:#c4d4d0;
+    --teal:#0d9488; --teal-600:#0f766e; --teal-700:#115e59; --teal-050:#e4f3ef; --teal-ink:#0b4f48;
+    --amber:#b45309; --amber-bg:#fdf2d8; --amber-line:#eab308;
+    --good:#16a34a;
+    --shadow:0 1px 2px rgba(12,40,36,.05), 0 12px 32px -14px rgba(12,40,36,.18);
+    --shadow-sm:0 1px 2px rgba(12,40,36,.06);
+    --r:16px; --r-sm:11px; --r-lg:24px;
+    --disp:'Bricolage Grotesque','Inter',system-ui,sans-serif;
+    --body:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --bg:#070f0e; --surface:#0f1b19; --surface-2:#132320; --raise:#152622;
+      --ink:#e9f2ef; --muted:#9fb3ae; --faint:#6a7f7a;
+      --line:#1d2f2b; --line-strong:#294039;
+      --teal:#2dd4bf; --teal-600:#22c3ae; --teal-700:#5eead4; --teal-050:#0e2b28; --teal-ink:#a7f3e6;
+      --amber:#fbbf24; --amber-bg:#2c2208; --amber-line:#a16207;
+      --good:#4ade80;
+      --shadow:0 1px 2px rgba(0,0,0,.4), 0 18px 40px -18px rgba(0,0,0,.7);
+      --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#070f0e; --surface:#0f1b19; --surface-2:#132320; --raise:#152622;
+    --ink:#e9f2ef; --muted:#9fb3ae; --faint:#6a7f7a;
+    --line:#1d2f2b; --line-strong:#294039;
+    --teal:#2dd4bf; --teal-600:#22c3ae; --teal-700:#5eead4; --teal-050:#0e2b28; --teal-ink:#a7f3e6;
+    --amber:#fbbf24; --amber-bg:#2c2208; --amber-line:#a16207;
+    --good:#4ade80;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 18px 40px -18px rgba(0,0,0,.7);
+    --shadow-sm:0 1px 2px rgba(0,0,0,.4);
+  }
+
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);
+    font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+  h1,h2,h3{font-family:var(--disp);font-weight:700;line-height:1.08;text-wrap:balance;margin:0}
+  p{margin:0}
+  a{color:inherit;text-decoration:none}
+  svg{display:block}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  .eyebrow{font-size:12.5px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--teal-600)}
+  :focus-visible{outline:2.5px solid var(--teal);outline-offset:3px;border-radius:4px}
+
+  /* ---- top bar ---- */
+  .top{position:sticky;top:0;z-index:20;backdrop-filter:blur(12px);
+    background:color-mix(in srgb,var(--bg) 82%,transparent);border-bottom:1px solid var(--line)}
+  .top .wrap{display:flex;align-items:center;gap:14px;height:64px}
+  .brand{display:flex;align-items:center;gap:11px;font-family:var(--disp);font-weight:800;font-size:20px;letter-spacing:-.02em}
+  .mark{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;color:#fff;
+    background:linear-gradient(140deg,var(--teal),var(--teal-700));box-shadow:0 6px 16px -6px var(--teal)}
+  .mark svg{width:20px;height:20px}
+  .top .sp{flex:1}
+  .top-link{font-size:14px;font-weight:600;color:var(--muted);padding:8px 6px}
+  .top-link:hover{color:var(--ink)}
+  @media(max-width:720px){.top-link.hide{display:none}}
+
+  .btn{display:inline-flex;align-items:center;gap:9px;font-family:var(--body);font-weight:700;font-size:15px;
+    padding:12px 20px;border-radius:12px;border:1px solid transparent;cursor:pointer;transition:transform .12s ease,box-shadow .2s ease,background .2s}
+  .btn svg{width:18px;height:18px}
+  .btn-primary{background:var(--teal);color:#04201d;box-shadow:0 10px 24px -10px var(--teal)}
+  :root[data-theme="dark"] .btn-primary,:root:not([data-theme="light"]) .btn-primary{color:#04201d}
+  .btn-primary:hover{transform:translateY(-2px)}
+  .btn-ghost{background:var(--surface);color:var(--ink);border-color:var(--line-strong)}
+  .btn-ghost:hover{border-color:var(--teal);color:var(--teal-600)}
+  .btn-lg{padding:15px 26px;font-size:16px}
+
+  /* ---- hero ---- */
+  .hero{padding:66px 0 34px;position:relative;overflow:hidden}
+  .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+  @media(max-width:900px){.hero-grid{grid-template-columns:1fr;gap:36px}}
+  .hero h1{font-size:clamp(2.5rem,5.4vw,4.1rem);font-weight:800;letter-spacing:-.03em;margin:18px 0 0}
+  .hero h1 .hl{color:var(--teal-600)}
+  .lede{font-size:clamp(1.05rem,1.6vw,1.22rem);color:var(--muted);max-width:34ch;margin:20px 0 0;line-height:1.55}
+  .hero-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+  .offer-chip{display:inline-flex;align-items:center;gap:9px;margin-top:22px;padding:8px 15px;border-radius:999px;
+    background:var(--amber-bg);border:1px solid var(--amber-line);color:var(--amber);font-weight:700;font-size:13.5px}
+  .offer-chip b{color:var(--ink)}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--amber);box-shadow:0 0 0 4px color-mix(in srgb,var(--amber) 22%,transparent)}
+
+  /* device mockup */
+  .device{background:var(--surface);border:1px solid var(--line);border-radius:var(--r-lg);
+    box-shadow:var(--shadow);padding:16px;position:relative}
+  .device::before{content:"";position:absolute;inset:-1px -1px auto;height:7px;border-radius:var(--r-lg) var(--r-lg) 0 0;
+    background:linear-gradient(90deg,var(--teal),var(--teal-700))}
+  .dv-head{display:flex;align-items:center;gap:9px;padding:4px 4px 12px}
+  .dv-title{font-weight:700;font-size:14px}
+  .dv-date{margin-left:auto;font-size:12px;color:var(--faint)}
+  .kpis{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}
+  .kpi{border-radius:var(--r-sm);padding:11px 12px;border:1px solid var(--line)}
+  .kpi.k1{background:var(--teal-050)}
+  .kpi.k2{background:color-mix(in srgb,var(--teal) 8%,var(--surface))}
+  .kpi.k3{background:color-mix(in srgb,var(--good) 12%,var(--surface))}
+  .kpi .kl{font-size:10.5px;color:var(--muted);font-weight:600}
+  .kpi .kv{font-family:var(--disp);font-weight:800;font-size:19px;margin-top:3px;font-variant-numeric:tabular-nums}
+  .kpi.k1 .kv{color:var(--teal-700)} .kpi.k3 .kv{color:var(--good)}
+  .chart{margin-top:13px;border:1px solid var(--line);border-radius:var(--r-sm);padding:12px 13px 10px;background:var(--surface-2)}
+  .chart .cl{font-size:10.5px;font-weight:700;color:var(--muted);margin-bottom:9px}
+  .bars{display:flex;align-items:flex-end;gap:8px;height:64px}
+  .bars i{flex:1;background:var(--teal);border-radius:4px 4px 2px 2px;opacity:.85}
+  .bars i.hot{background:var(--teal-700);opacity:1}
+  :root[data-theme="dark"] .bars i.hot,:root:not([data-theme="light"]) .bars i.hot{background:var(--teal-700)}
+  .rows{margin-top:11px;display:flex;flex-direction:column;gap:7px}
+  .row{display:flex;align-items:center;gap:10px;padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:var(--surface);font-size:12.5px}
+  .row .ri{width:26px;height:26px;border-radius:7px;display:grid;place-items:center;flex:none}
+  .row .ri svg{width:14px;height:14px}
+  .ri.amber{background:var(--amber-bg);color:var(--amber)}
+  .ri.teal{background:var(--teal-050);color:var(--teal-700)}
+  .row .rn{font-weight:600}
+  .row .rs{margin-left:auto;font-weight:700;color:var(--teal-700);font-variant-numeric:tabular-nums}
+  .row .pill{margin-left:auto;font-size:11px;font-weight:700;color:var(--amber);background:var(--amber-bg);padding:2px 8px;border-radius:999px}
+
+  /* ---- stat strip ---- */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+    border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-top:46px}
+  @media(max-width:640px){.stats{grid-template-columns:repeat(2,1fr)}}
+  .stat{background:var(--surface);padding:20px 18px;text-align:center}
+  .stat .n{font-family:var(--disp);font-weight:800;font-size:27px;color:var(--teal-600);font-variant-numeric:tabular-nums}
+  .stat .t{font-size:12.5px;color:var(--muted);margin-top:3px;font-weight:500}
+
+  /* ---- sections ---- */
+  section{padding:64px 0}
+  .sec-head{max-width:60ch}
+  .sec-head h2{font-size:clamp(1.7rem,3.4vw,2.4rem);font-weight:700;letter-spacing:-.02em;margin-top:12px}
+  .sec-head p{color:var(--muted);margin-top:12px;font-size:1.05rem}
+
+  /* problems */
+  .plist{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:34px}
+  @media(max-width:760px){.plist{grid-template-columns:1fr}}
+  .prob{display:flex;gap:14px;padding:18px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface)}
+  .prob .x{width:30px;height:30px;border-radius:9px;flex:none;display:grid;place-items:center;font-weight:800;
+    background:color-mix(in srgb,#dc2626 14%,var(--surface));color:#dc2626}
+  :root[data-theme="dark"] .prob .x,:root:not([data-theme="light"]) .prob .x{background:#3a1414;color:#f87171}
+  .prob h3{font-family:var(--body);font-size:15px;font-weight:700}
+  .prob .arrow{font-size:12.5px;color:var(--teal-600);font-weight:700;margin-top:5px;display:flex;gap:7px;align-items:flex-start}
+  .prob .arrow svg{width:15px;height:15px;flex:none;margin-top:1px;color:var(--teal)}
+  .prob .arrow span{color:var(--muted);font-weight:500}
+
+  /* capabilities */
+  .cap-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:38px}
+  @media(max-width:860px){.cap-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.cap-grid{grid-template-columns:1fr}}
+  .cap{padding:22px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);
+    transition:transform .14s ease,border-color .2s,box-shadow .2s}
+  .cap:hover{transform:translateY(-3px);border-color:var(--teal);box-shadow:var(--shadow)}
+  .cap .ic{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;margin-bottom:15px;
+    background:var(--teal-050);color:var(--teal-700)}
+  .cap .ic svg{width:22px;height:22px}
+  .cap h3{font-family:var(--body);font-size:16.5px;font-weight:700}
+  .cap p{color:var(--muted);font-size:14px;margin-top:7px;line-height:1.5}
+  .extras{margin-top:20px;display:flex;flex-wrap:wrap;gap:9px}
+  .tag{font-size:13px;font-weight:600;color:var(--teal-ink);background:var(--teal-050);
+    border:1px solid color-mix(in srgb,var(--teal) 25%,transparent);padding:7px 13px;border-radius:999px}
+
+  /* why */
+  .why{background:var(--surface-2);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:26px;margin-top:36px}
+  @media(max-width:760px){.why-grid{grid-template-columns:1fr;gap:20px}}
+  .why-item{display:flex;flex-direction:column;gap:9px}
+  .why-item .wn{display:flex;align-items:center;gap:11px}
+  .why-item .wn .c{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;flex:none;
+    background:var(--teal);color:#04201d}
+  .why-item .wn .c svg{width:18px;height:18px}
+  .why-item h3{font-family:var(--body);font-size:16.5px;font-weight:700}
+  .why-item p{color:var(--muted);font-size:14.5px}
+
+  /* offer band */
+  .offer{background:linear-gradient(155deg,var(--teal-700),var(--teal-600));color:#eafff9;border-radius:var(--r-lg);
+    padding:44px;position:relative;overflow:hidden;text-align:center}
+  .offer::after{content:"";position:absolute;width:280px;height:280px;border-radius:50%;right:-90px;top:-120px;
+    background:rgba(255,255,255,.08)}
+  .offer .rib{font-size:12.5px;font-weight:800;letter-spacing:.18em;text-transform:uppercase;color:#bff6ea}
+  .offer h2{color:#fff;font-size:clamp(2rem,4.6vw,3rem);font-weight:800;margin:12px 0 6px;letter-spacing:-.02em}
+  .offer .sub{color:#c9f7ee;font-size:1.1rem;font-weight:600}
+  .offer .note{color:#a7ede0;font-size:.95rem;margin:14px auto 24px;max-width:46ch}
+  .offer .btn-primary{background:#ffffff;color:var(--teal-700)}
+
+  /* steps */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:36px}
+  @media(max-width:760px){.steps{grid-template-columns:1fr}}
+  .step{padding:22px;border:1px solid var(--line);border-radius:var(--r);background:var(--surface);position:relative}
+  .step .no{font-family:var(--disp);font-weight:800;font-size:15px;width:34px;height:34px;border-radius:50%;
+    display:grid;place-items:center;background:var(--teal);color:#04201d;margin-bottom:14px}
+  .step h3{font-family:var(--body);font-size:16px;font-weight:700}
+  .step p{color:var(--muted);font-size:14px;margin-top:6px}
+
+  /* contact */
+  .contact{background:var(--ink);border-radius:var(--r-lg);padding:44px;text-align:center;color:var(--bg)}
+  :root:not([data-theme="light"]) .contact,:root[data-theme="dark"] .contact{background:#0a1614;color:var(--ink);border:1px solid var(--line)}
+  .contact h2{color:inherit;font-size:clamp(1.6rem,3.4vw,2.3rem);font-weight:700}
+  .contact p{opacity:.8;margin-top:10px}
+  .contact-row{display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:26px}
+  .contact .btn-ghost{background:transparent;color:var(--bg);border-color:rgba(255,255,255,.28)}
+  :root:not([data-theme="light"]) .contact .btn-ghost,:root[data-theme="dark"] .contact .btn-ghost{color:var(--ink);border-color:var(--line-strong)}
+  .contact .btn-ghost:hover{border-color:var(--teal);color:var(--teal-700)}
+
+  footer{padding:34px 0 46px;text-align:center;color:var(--faint);font-size:13px}
+  footer .brand{justify-content:center;margin-bottom:10px;font-size:17px}
+
+  @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <div class="brand">
+      <span class="mark" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5v14"/></svg></span>
+      PharmaCare
+    </div>
+    <span class="sp"></span>
+    <a class="top-link hide" href="#awood">Awoodaha</a>
+    <a class="top-link hide" href="#sababta">Sababta</a>
+    <a class="btn btn-primary" href="https://wa.me/252636759479" aria-label="La xiriir WhatsApp">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+      Wac
+    </a>
+  </div>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap hero-grid">
+    <div>
+      <span class="eyebrow">Nidaamka Maamulka Farmashiga · Af-Soomaali</span>
+      <h1>Farmashigaaga oo dhan — <span class="hl">hal shaashad.</span></h1>
+      <p class="lede">Iib, bakhaar, deyn, shaybaadh iyo warbixino — hal nidaam casri ah oo dhaqso badan, amaan ah, oo xitaa internet-la'aan shaqeeya.</p>
+      <div class="offer-chip"><span class="dot"></span> BILAASH — <b>Bishii 1aad + tababar shaqaale</b></div>
+      <div class="hero-cta">
+        <a class="btn btn-primary btn-lg" href="https://wa.me/252636759479">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+          Isku day bilaash
+        </a>
+        <a class="btn btn-ghost btn-lg" href="#awood">Eeg awoodaha</a>
+      </div>
+    </div>
+
+    <!-- product mockup -->
+    <div class="device" role="img" aria-label="Muuqaal dashboard-ka PharmaCare oo tusaale ah">
+      <div class="dv-head">
+        <span class="mark" style="width:26px;height:26px;border-radius:7px" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M12 5v14"/></svg></span>
+        <span class="dv-title">Dashboard</span>
+        <span class="dv-date">Isniin, 8 Sept · tusaale</span>
+      </div>
+      <div class="kpis">
+        <div class="kpi k1"><div class="kl">Dakhli maanta</div><div class="kv">$1,240</div></div>
+        <div class="kpi k2"><div class="kl">Iib</div><div class="kv">58</div></div>
+        <div class="kpi k3"><div class="kl">Faa'iido</div><div class="kv">$291</div></div>
+      </div>
+      <div class="chart">
+        <div class="cl">Dakhliga 7 maalmood</div>
+        <div class="bars"><i style="height:42%"></i><i style="height:62%"></i><i style="height:38%"></i><i style="height:74%"></i><i style="height:52%"></i><i class="hot" style="height:92%"></i><i style="height:66%"></i></div>
+      </div>
+      <div class="rows">
+        <div class="row"><span class="ri amber" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/></svg></span><span class="rn">Amlodipine 5mg</span><span class="pill">12 hadhay</span></div>
+        <div class="row"><span class="ri teal" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M8 7h8M8 11h8"/></svg></span><span class="rn">INV-00058 · Hassan A.</span><span class="rs">$9.19</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat"><div class="n">14</div><div class="t">Module oo isku xiran</div></div>
+      <div class="stat"><div class="n">100+</div><div class="t">Shaqo oo gaar ah</div></div>
+      <div class="stat"><div class="n">2</div><div class="t">Luqadood (SO/EN)</div></div>
+      <div class="stat"><div class="n">100%</div><div class="t">Cloud + Offline</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEMS -->
+<section id="dhib">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Dhibaatadaada — xalkeenna</span>
+      <h2>Waxa farmashiyadu maalin walba la kulmaan</h2>
+      <p>PharmaCare wuxuu u beddelaa hawlaha adag kuwo fudud oo si toos ah u dhaca.</p>
+    </div>
+    <div class="plist">
+      <div class="prob"><span class="x" aria-hidden="true">!</span><div><h3>Xisaabaad gacan & buugaag lumaya</h3><div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span>Dhammaan iibka & xisaabta si toos ah — hal guji.</span></div></div></div>
+      <div class="prob"><span class="x" aria-hidden="true">!</span><div><h3>Lacagta khasnadda oo aan la ogayn</h3><div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span>Cash Close: maalintii & habeenkii (shift) + shortage/over.</span></div></div></div>
+      <div class="prob"><span class="x" aria-hidden="true">!</span><div><h3>Daawooyin dhaca oo lumiya lacag</h3><div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span>Digniin expiry + batch tracking — waqti hore ayaad ogaataa.</span></div></div></div>
+      <div class="prob"><span class="x" aria-hidden="true">!</span><div><h3>Deynta macaamiisha oo la illoobo</h3><div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span>Diiwaanka Deyn: qof kasta intuu ku leeyahay + lacag-bixin.</span></div></div></div>
+      <div class="prob"><span class="x" aria-hidden="true">!</span><div><h3>Stock dhammaada si lama filaan ah</h3><div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span>Digniin low-stock + liis dib-dalab (reorder) oo diyaar ah.</span></div></div></div>
+      <div class="prob"><span class="x" aria-hidden="true">!</span><div><h3>Rasiidh aan professional ahayn</h3><div class="arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg><span>Rasiidh qurux badan oo logo leh — thermal 58/80mm.</span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CAPABILITIES -->
+<section id="awood">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Awoodaha</span>
+      <h2>Wax kasta oo farmashigaagu u baahan yahay</h2>
+      <p>Hal nidaam oo ka shaqeeya farmashi iyo shaybaadh isku mar — telefoon, tablet ama kombuyuutar.</p>
+    </div>
+    <div class="cap-grid">
+      <div class="cap"><div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg></div><h3>POS — Iib degdeg ah</h3><p>Barcode scanner, discount, mobile money (EVC/Zaad/Sahal/eDahab), rasiidh la daabaco.</p></div>
+      <div class="cap"><div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5M12 22V12"/></svg></div><h3>Bakhaar — Inventory</h3><p>Batch, expiry, barcode, reorder level, stock write-off + digniino automatic ah.</p></div>
+      <div class="cap"><div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><h3>Deyn — Credit</h3><p>Diiwaanka deynta macaamiisha, lacag-bixin, iyo taariikh buuxda oo qof kasta.</p></div>
+      <div class="cap"><div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3h6M10 3v6.5L4.5 19a1 1 0 0 0 .9 1.5h13.2a1 1 0 0 0 .9-1.5L14 9.5V3"/><path d="M7.5 15h9"/></svg></div><h3>Shaybaadh — Lab</h3><p>~115 baadhitaan (dhiig, kaadi, candhuuf…), natiijo, iyo warbixin la daabaco.</p></div>
+      <div class="cap"><div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-3 3"/></svg></div><h3>Reports & Dashboard</h3><p>Dakhli, faa'iido, profit margin %, Z-report la daabaco, iyo iib shaqaale kasta.</p></div>
+      <div class="cap"><div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 14 4 9l5-5"/><path d="M4 9h11a5 5 0 0 1 5 5 5 5 0 0 1-5 5H8"/></svg></div><h3>Returns / Refunds</h3><p>Soo-celinta alaabta, stock si toos ah dib loogu celiyo, rasiidh refund gaar ah.</p></div>
+      <div class="cap"><div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><h3>Doorar Shaqaale</h3><p>Cashier / Pharmacist / Admin — mid kasta wixii u gaar ah oo keliya.</p></div>
+      <div class="cap"><div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.5 19a4.5 4.5 0 0 0 0-9 6 6 0 0 0-11.6-1.5A4.5 4.5 0 0 0 6.5 19Z"/></svg></div><h3>Cloud & Offline</h3><p>Xogtaadu waa amaan (cloud + backup) — wuuna shaqeeyaa internet la'aan.</p></div>
+      <div class="cap"><div class="ic" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><h3>Amni & Backup</h3><p>Login amaan ah, doorar, iyo backup mid kasta — xogtaadu ma lumeyso.</p></div>
+    </div>
+    <div class="extras">
+      <span class="tag">Cash Close (shift)</span>
+      <span class="tag">Mobile Money</span>
+      <span class="tag">Barcode scanner</span>
+      <span class="tag">Digniino (alerts)</span>
+      <span class="tag">Thermal receipt + logo</span>
+      <span class="tag">Suppliers & Purchases</span>
+      <span class="tag">Macaamiil</span>
+      <span class="tag">App telefoonka (PWA)</span>
+      <span class="tag">Af-Soomaali / English</span>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section id="sababta" class="why">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Sababta</span>
+      <h2>Maxay farmashiyadu u doortaan PharmaCare?</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why-item"><div class="wn"><span class="c" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><h3>Fudud in la barto</h3></div><p>Af-Soomaali, muuqaal nadiif ah — shaqaaluhu hal maalin gudaheed ayuu bartaa. Taageero joogto ah oo Soomaali ah.</p></div>
+      <div class="why-item"><div class="wn"><span class="c" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><h3>Xog amaan ah</h3></div><p>Cloud (online) oo backup leh — xogtaadu ma lumeyso, meel kastana ka eeg ganacsigaaga.</p></div>
+      <div class="why-item"><div class="wn"><span class="c" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></span><h3>Hal meel — wax walba</h3></div><p>Iib + bakhaar + deyn + shaybaadh + warbixino. Uma baahnid nidaamyo badan oo kala duwan.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- OFFER -->
+<section>
+  <div class="wrap">
+    <div class="offer">
+      <div class="rib">Dalab gaar ah</div>
+      <h2>Bishii 1aad — LACAG LA'AAN</h2>
+      <div class="sub">+ Tababar bilaash ah oo shaqaalaha oo dhan</div>
+      <p class="note">Isku day dhab ah — farmashigaaga ku maamul, ka dibna go'aanka gaadh. Lacag ma bixinaysid ilaa aad hubiso.</p>
+      <a class="btn btn-primary btn-lg" href="https://wa.me/252636759479">Bilow isku-daygaaga bilaashka ah</a>
+    </div>
+  </div>
+</section>
+
+<!-- STEPS -->
+<section style="padding-top:16px">
+  <div class="wrap">
+    <div class="sec-head"><span class="eyebrow">Sida loo bilaabo</span><h2>Saddex tallaabo — daqiiqado gudahood</h2></div>
+    <div class="steps">
+      <div class="step"><div class="no">1</div><h3>Nala soo xiriir</h3><p>Wac WhatsApp ama email — waan kaa jawaabaynaa dhaqso.</p></div>
+      <div class="step"><div class="no">2</div><h3>Dejin & tababar</h3><p>Waan kuu dejinaa systemka, shaqaalahana waan baraa — bilaash.</p></div>
+      <div class="step"><div class="no">3</div><h3>Bilow iibka</h3><p>Isla maalinta ayaad isticmaali kartaa — bishii 1aad free.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section style="padding-top:16px">
+  <div class="wrap">
+    <div class="contact">
+      <h2>Diyaar ma u tahay inaad farmashigaaga casriyeyso?</h2>
+      <p>Nala soo xiriir maanta — bilowgu waa bilaash.</p>
+      <div class="contact-row">
+        <a class="btn btn-primary btn-lg" href="https://wa.me/252636759479">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></svg>
+          WhatsApp: 063-6759479
+        </a>
+        <a class="btn btn-ghost btn-lg" href="mailto:abdilaahimohamed374@gmail.com" style="max-width:100%;font-size:15px" aria-label="Email: abdilaahimohamed374@gmail.com">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          <span style="min-width:0;overflow-wrap:anywhere">abdilaahimohamed374@gmail.com</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="brand" style="color:var(--ink)"><span class="mark" style="width:28px;height:28px;border-radius:8px" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M12 5v14"/></svg></span> PharmaCare</div>
+  Nidaamka Casriga ah ee Maamulka Farmashiga · Af-Soomaali & English
+</footer>
+</body>
+</html>

@@ -1,0 +1,92 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() { return request.auth != null; }
+    function hasUserDoc() { return signedIn() && exists(/databases/$(database)/documents/users/$(request.auth.uid)); }
+    function myUserDoc() { return get(/databases/$(database)/documents/users/$(request.auth.uid)).data; }
+    function myPharmacy() { return hasUserDoc() ? myUserDoc().pharmacyId : null; }
+    // Guard with exists() so a user without a profile (e.g. a dedicated super-admin) returns false instead of erroring.
+    function isMember(pid) { return hasUserDoc() && myUserDoc().pharmacyId == pid; }
+    function ownsPharmacy(pid) {
+      return signedIn() &&
+        get(/databases/$(database)/documents/pharmacies/$(pid)).data.ownerUid == request.auth.uid;
+    }
+    function hasInvite(pid) {
+      return exists(/databases/$(database)/documents/pharmacies/$(pid)/invites/$(request.auth.token.email));
+    }
+    // 👑 Platform operator — designated ONLY by a doc that no client can write (see /superadmins).
+    function isSuperAdmin() {
+      return signedIn() && exists(/databases/$(database)/documents/superadmins/$(request.auth.uid));
+    }
+
+    // ---- Super admins (platform operators) ----
+    // Created/removed ONLY from the Firebase Console or Admin SDK — never from the client.
+    match /superadmins/{uid} {
+      allow read: if signedIn() && (request.auth.uid == uid || isSuperAdmin());
+      allow write: if false;
+    }
+
+    // ---- Platform-wide configuration (announcement, feature flags, plans, settings) ----
+    // Everyone signed-in can READ (app needs flags/announcement); only super-admin writes.
+    match /platform/config {
+      allow read: if signedIn();
+      allow write: if isSuperAdmin();
+    }
+    // Any other platform docs: super-admin only.
+    match /platform/{doc} {
+      allow read: if signedIn();
+      allow write: if isSuperAdmin();
+    }
+    // Audit log — super-admin only.
+    match /auditlog/{id} {
+      allow read, create: if isSuperAdmin();
+      allow update, delete: if false;
+    }
+    // Client error reports — a signed-in user may file ONE for THEMSELVES, bounded & fixed-shape
+    // (limits abuse/spam). Only super-admin reads/clears.
+    match /errorlog/{id} {
+      allow create: if signedIn()
+                    && request.resource.data.uid == request.auth.uid
+                    && request.resource.data.message is string
+                    && request.resource.data.message.size() < 600
+                    && request.resource.data.keys().hasOnly(['message','stack','pharmacyId','uid','email','url','at']);
+      allow read, delete: if isSuperAdmin();
+      allow update: if false;
+    }
+
+    // ---- User profiles ----
+    match /users/{uid} {
+      allow read: if signedIn() && (uid == request.auth.uid || isSuperAdmin() || resource.data.pharmacyId == myPharmacy());
+      allow create: if request.auth.uid == uid
+                    && ( ownsPharmacy(request.resource.data.pharmacyId) || hasInvite(request.resource.data.pharmacyId) );
+      allow update: if request.auth.uid == uid
+                    && request.resource.data.pharmacyId == resource.data.pharmacyId
+                    && request.resource.data.role == resource.data.role;
+      allow delete: if isSuperAdmin();
+    }
+
+    // ---- Pharmacy (tenant) ----
+    match /pharmacies/{pid} {
+      // New pharmacies must start as 'pending' (await super-admin approval).
+      allow create: if signedIn()
+                    && request.resource.data.ownerUid == request.auth.uid
+                    && request.resource.data.status == 'pending';
+      allow read: if isSuperAdmin() || isMember(pid);
+      // Members may edit their pharmacy profile but NOT their own status, plan, subscription, or feature overrides.
+      allow update: if isSuperAdmin()
+                    || ( isMember(pid)
+                         && request.resource.data.status == resource.data.status
+                         && request.resource.data.plan == resource.data.plan
+                         && request.resource.data.ownerUid == resource.data.ownerUid
+                         && request.resource.data.get('subscription', null) == resource.data.get('subscription', null)
+                         && request.resource.data.get('featureOverrides', null) == resource.data.get('featureOverrides', null) );
+      allow delete: if isSuperAdmin() || ownsPharmacy(pid);
+
+      // All tenant data — a super-admin (read for support / manage) or members of THIS pharmacy.
+      match /{document=**} {
+        allow read, write: if isSuperAdmin() || isMember(pid);
+      }
+    }
+  }
+}

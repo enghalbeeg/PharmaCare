@@ -1,0 +1,17 @@
+# Firebase deploy cache
+.firebase/
+firebase-debug.log
+
+# Node (project is buildless, but ignore if ever added)
+node_modules/
+
+# Logs & OS files
+*.log
+.DS_Store
+Thumbs.db
+
+# Generated PDF outputs (regenerate with the Python scripts)
+*.pdf
+
+# Claude Code local settings
+.claude/
