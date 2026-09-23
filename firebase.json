@@ -30,7 +30,7 @@
     {
       "site": "enghalbeeg",
       "public": "eng",
-      "ignore": ["**/.*"],
+      "ignore": ["**/.*", "*.md"],
       "headers": [
         {
           "source": "**/*.@(html)",

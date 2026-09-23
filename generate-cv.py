@@ -7,7 +7,7 @@ from reportlab.lib.colors import HexColor
 from reportlab.pdfbase.pdfmetrics import stringWidth
 
 W, H = A4
-OUT = "Abdalla-Mohamed-CV.pdf"
+OUT = "eng/Abdalla-Mohamed-CV.pdf"
 PHOTO = "eng/photo.jpg"
 
 # palette
@@ -86,7 +86,7 @@ def side_head(y,label):
 y = H-62*mm
 y = side_head(y,"Contact")
 for val in ["abdilaahimohamed374@gmail.com","063-6759479 (WhatsApp)",
-            "Burao, Somaliland","enghalbeeg.web.app","github.com/enghalbeeg"]:
+            "Burao, Somaliland","enghalbeeg.com","github.com/enghalbeeg"]:
     for ln in wrap(val,"Helvetica",7.9,sw):
         T(sx,y,ln,7.9,"Helvetica",SWHITE); y-=10.5
     y-=3
@@ -159,8 +159,8 @@ my = project(my,"Business Websites","HTML · CSS · JavaScript",
 # footer
 c.setStrokeColor(LINE); c.line(mx,20*mm,mx+mw,20*mm)
 T(mx,15*mm,"Portfolio:",8.5,"Helvetica-Bold",INK)
-T(mx+stringWidth("Portfolio:  ","Helvetica-Bold",8.5),15*mm,"enghalbeeg.web.app",8.5,"Helvetica",AMBER)
-T(mx+stringWidth("Portfolio:  enghalbeeg.web.app     ","Helvetica-Bold",8.5),15*mm,"·  github.com/enghalbeeg",8.5,"Helvetica",SLATE)
+T(mx+stringWidth("Portfolio:  ","Helvetica-Bold",8.5),15*mm,"enghalbeeg.com",8.5,"Helvetica",AMBER)
+T(mx+stringWidth("Portfolio:  enghalbeeg.com     ","Helvetica-Bold",8.5),15*mm,"·  github.com/enghalbeeg",8.5,"Helvetica",SLATE)
 T(mx+mw,11*mm,"Available for freelance & senior engineering roles",7.8,"Helvetica-Oblique",FAINT,right=True)
 
 c.save()
